@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from backend.views import CheckPermission
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
@@ -10,5 +9,4 @@ urlpatterns = [
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
     path('api/v1/auth/', include('djoser.urls')),
     path('api/v1/auth/', include('djoser.urls.jwt')),
-    path('', CheckPermission.as_view())
 ]
