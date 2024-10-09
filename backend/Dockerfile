@@ -7,7 +7,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 COPY . .
 
-RUN python manage.py migrate --noinput
-RUN python manage.py collectstatic --noinput
-
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "backend.wsgi:application"]
