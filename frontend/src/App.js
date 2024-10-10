@@ -16,10 +16,10 @@ const App = () => (
 				<Route exact path='/login' element={<Login />} />
 				<Route exact path='/signup' element={<Signup />} />
 				<Route exact path='/activate/:token' element={<Activate />} />
-				<Route exact path='/resetpassword' element={<ResetPassword />} />
+				<Route exact path='/reset_password' element={<ResetPassword />} />
 				<Route
 					exact
-					path='/reset-password/:token'
+					path='password/reset/confirm/:uid/:token'
 					element={<ResetPasswordConfirm />}
 				/>
 			</Routes>
