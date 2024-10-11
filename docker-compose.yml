@@ -23,7 +23,9 @@ services:
     networks:
       - internal
   backend:
-    image: backend-image
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: backend
     env_file: .env
     restart: always
@@ -39,7 +41,9 @@ services:
     networks:
       - internal
   worker:
-    image: backend-image
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     hostname: worker
     entrypoint: celery
     command: celery -A backend worker --loglevel=info
@@ -48,19 +52,23 @@ services:
       - media:/app/media
     depends_on:
       - redis
-  # nginx:
-  #   image: nginx:alpine
-  #   restart: always
-  #   depends_on:
-  #     - backend
-  #   ports:
-  #     - "8000:80"
-  #   volumes:
-  #     - static:/app/static
-  #     - media:/app/media
-  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf
-  #   networks:
-  #     - internal
+      - backend
+    networks:
+      - internal
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static:/app/static
+      - media:/app/media
+    networks:
+      - internal
 
 volumes:
   postgres_data:
