@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "digital": "^0.0.1",
+    "dotenv": "^16.4.5",
     "envelope": "^2.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -44,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

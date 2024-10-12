@@ -24,18 +24,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='Email', 
                               unique=True,
                               max_length=255)
-    first_name = models.CharField(verbose_name='Имя',
-                                  max_length=30,
-                                  blank=True,
-                                  null=True)
-    last_name = models.CharField(verbose_name='Фамилия',
-                                  max_length=30,
-                                  blank=True,
-                                  null=True)
-    
+
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
     
     objects = CustomUserManager()
     
