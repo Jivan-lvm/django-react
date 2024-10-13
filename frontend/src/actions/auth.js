@@ -28,11 +28,15 @@ export const checkAuthenticated = () => async dispatch => {
                     type: AUTHENTICATED_SUCCESS,
                 })
 			} else{
+				localStorage.removeItem('access')
+				localStorage.removeItem('refresh')
 				dispatch({
                     type: AUTHENTICATED_FAIL,
                 })
 			}
 		} catch(err){
+			localStorage.removeItem('access')
+			localStorage.removeItem('refresh')
 			dispatch({
                 type: AUTHENTICATED_FAIL,
             })

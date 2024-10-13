@@ -9,11 +9,11 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    access: localStorage.getItem('access'),
-    refresh: localStorage.getItem('refresh'),
-    user: null,
-    isAuthenticated: null,
-};
+	access: localStorage.getItem('access'),
+	refresh: localStorage.getItem('refresh'),
+	user: null,
+	isAuthenticated: false,
+}
 
 export default function(state = initialState, action){
     const { type, payload } = action;
@@ -26,6 +26,7 @@ export default function(state = initialState, action){
 				}
 			case LOGIN_SUCCESS:
 				localStorage.setItem('access', payload.access)
+                localStorage.setItem('refresh', payload.refresh)
 				return {
 					...state,
 					access: payload.access,
