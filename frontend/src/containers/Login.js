@@ -59,7 +59,7 @@ const Login = ({ login, isAuthenticated }) => {
 				Нет аккаунта? <Link to='/signup'>Зарегистрироваться</Link>
 			</p>
 			<p className='mt-3'>
-				Забыли пароль? <Link to='/reset-password'>Сменить пароль</Link>
+				Забыли пароль? <Link to='/reset_password'>Сменить пароль</Link>
 			</p>
 		</div>
 	)
