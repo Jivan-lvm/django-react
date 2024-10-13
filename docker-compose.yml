@@ -22,6 +22,16 @@ services:
       - "6379:6379"
     networks:
       - internal
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: always
+    ports: 
+      - "3000:3000"
+    networks:
+      - internal
   backend:
     build:
       context: ./backend
@@ -34,6 +44,7 @@ services:
     depends_on:
       - db
       - redis
+      - frontend
     volumes:
       - ./logs:/app/logs
       - static:/app/static

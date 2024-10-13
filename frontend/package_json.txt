@@ -1,0 +1,22 @@
+Для локального запуска на виндоус скопировать в pakage.json
+
+"scripts": {
+		"start": "react-scripts start",
+    "build": "yarn build:clean && yarn build:frontend",
+    "build:clean": "rmdir /S /Q ..\\backend\\build",
+    "build:frontend": "react-scripts build && xcopy build ..\\backend\\build /E /I",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+
+
+для запуска через докер или линукс
+
+"scripts": {
+    "start": "react-scripts start",
+    "build": "yarn build:clean && yarn build:frontend",
+    "build:clean": "rm -rf ../backend/build", 
+    "build:frontend": "react-scripts build && mkdir -p ../backend/build && cp -r build/* ../backend/build/",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+}
