@@ -19,4 +19,4 @@
     "build:frontend": "react-scripts build && mkdir -p ../backend/build && cp -r build/* ../backend/build/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-}
+},
