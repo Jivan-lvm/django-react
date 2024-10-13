@@ -10,6 +10,8 @@ import {
 	PASSWORD_RESET_SUCCESS,
 	PASSWORD_RESET_FAIL,
 	PASSWORD_RESET_CONFIRM_SUCCESS,
+	SIGNUP_FAIL,
+	SIGNUP_SUCCESS
 } from '../actions/types'
 
 const initialState = {
@@ -37,6 +39,11 @@ export default function(state = initialState, action){
 					refresh: payload.refresh,
 					isAuthenticated: true,
 				}
+			case SIGNUP_SUCCESS:
+				return {
+                    ...state,
+					isAuthenticated: false,
+				}
 			case LOAD_USER_SUCCESS:
 				return {
 					...state,
@@ -54,6 +61,7 @@ export default function(state = initialState, action){
 				}
 			case LOGIN_FAIL:
             case LOGOUT:
+			case SIGNUP_FAIL:
 				localStorage.removeItem('access')
 				localStorage.removeItem('refresh')
 				return {
@@ -67,6 +75,8 @@ export default function(state = initialState, action){
             case PASSWORD_RESET_FAIL:
             case PASSWORD_RESET_CONFIRM_SUCCESS:
             case PASSWORD_RESET_CONFIRM_FAIL:
+			case SIGNUP_FAIL:
+			case SIGNUP_SUCCESS:
                 return {
                     ...state
                 }
