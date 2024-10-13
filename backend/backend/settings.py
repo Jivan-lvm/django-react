@@ -23,8 +23,6 @@ DEFAULT_SITE_URL = os.getenv('DEFAULT_SITE_URL', default='127.0.0.1:8000')
 DATABASE = os.getenv('DATABASE', default='sqlite')
 RUN_TYPE = os.getenv('RUN_TYPE', default='LOCAL')
 
-FRONTEND_DIR = os.path.join(BASE_DIR, '../frontend')
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,7 +71,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-             os.path.join(FRONTEND_DIR, 'build'),
+             os.path.join(BASE_DIR, 'build'),
              ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -132,6 +130,9 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static'),
+]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
@@ -144,9 +145,6 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000",]
 
 REACT_APP_DIR = os.path.join(BASE_DIR, '../frontend')
-STATICFILES_DIRS = [
-    os.path.join(FRONTEND_DIR, 'build', 'static'),
-]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

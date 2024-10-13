@@ -4,7 +4,46 @@ import {
 	LOGIN_FAIL,
 	LOAD_USER_SUCCESS,
 	LOAD_USER_FAIL,
+	AUTHENTICATED_FAIL,
+	AUTHENTICATED_SUCCESS,
+	LOGOUT
 } from './types'
+
+export const checkAuthenticated = () => async dispatch => {
+	if (localStorage.getItem('access')){
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+			},
+		}
+
+		const body = JSON.stringify({ token: localStorage.getItem('access') })
+
+		try{
+			const res = await axios.post(`${API_URL}/users/auth/token/verify/`, body, config)
+
+			if (res.data.code !== 'token_not_valid'){
+				dispatch({
+                    type: AUTHENTICATED_SUCCESS,
+                })
+			} else{
+				dispatch({
+                    type: AUTHENTICATED_FAIL,
+                })
+			}
+		} catch(err){
+			dispatch({
+                type: AUTHENTICATED_FAIL,
+            })
+		}
+
+	} else{
+		dispatch({
+            type: AUTHENTICATED_FAIL,
+        })
+	}
+}
 
 const API_URL =
 	process.env.REACT_APP_API_URL
@@ -65,4 +104,10 @@ export const login = (email, password) => async dispatch => {
 			type: LOGIN_FAIL,
 		})
 	}
+}
+
+export const logout = () => dispatch => {
+	dispatch({
+		type: LOGOUT
+	})
 }

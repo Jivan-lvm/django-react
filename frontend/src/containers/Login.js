@@ -1,20 +1,26 @@
 import React, {useState} from 'react';
-import { Link, redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 
-const Login = ({ login }) => {
+const Login = ({ login, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
 
     const { email, password } = formData;
+
     const onChange = (e) => setFormData({...formData, [e.target.name]: e.target.value });
+
     const onSubmit = (e) => {
         e.preventDefault();
 		login(email, password);
     };
+
+	if (isAuthenticated) {
+		return <Navigate to='/' />
+	}
 
     return (
 			<div className='container mt-5'>
@@ -58,4 +64,8 @@ const Login = ({ login }) => {
 		)
 };
 
-export default connect(null, { login }) (Login);
+const mapStateToProps = state => ({
+	isAuthenticated: state.isAuthenticated
+})
+
+export default connect(mapStateToProps, { login }) (Login);
