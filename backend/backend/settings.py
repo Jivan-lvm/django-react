@@ -30,8 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
     'rest_framework',
+    'backend',
     'djoser',
     'corsheaders',
     'rest_framework_json_api',
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     'users.apps.UsersConfig',
-    # 'api.apps.ApiConfig',
+    'api.apps.ApiConfig',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -84,6 +84,44 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGS_PATH = os.path.join(BASE_DIR, 'logs')
+os.makedirs(LOGS_PATH, exist_ok=True)
+
+LOGS_FILENAME = os.path.join(LOGS_PATH, 'backend.log')
+LOG_MAX_BYTES = 5 * 1024 * 1024
+LOGS_BACKUP_COUNT = 10
+
+LOGGING = {
+    'version': 1,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_FILENAME,
+            'maxBytes': LOG_MAX_BYTES,
+            'backupCount': LOGS_BACKUP_COUNT,
+            'level': 'INFO',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
