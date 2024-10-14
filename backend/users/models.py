@@ -24,6 +24,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='Email', 
                               unique=True,
                               max_length=255)
+    balance_usdt = models.DecimalField(max_digits=10, decimal_places=2, default=1000)
+    balance_crypto = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
@@ -36,3 +38,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
