@@ -46,22 +46,19 @@ services:
     volumes:
       - ./logs:/app/logs
       - static:/app/static
-      - media:/app/media
     networks:
       - internal
   worker:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    hostname: worker
-    entrypoint: celery
+    restart: always
+    env_file: .env
     command: celery -A backend worker --loglevel=info
     volumes:
       - ./logs:/app/logs
-      - media:/app/media
     depends_on:
       - redis
-      - backend
     networks:
       - internal
   nginx:
@@ -75,11 +72,9 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - static:/app/static
-      - media:/app/media
     networks:
       - internal
 
 volumes:
   postgres_data:
   static:
-  media:
