@@ -48,10 +48,10 @@ services:
       - static:/app/static
     networks:
       - internal
-  worker:
+  celery-worker:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+    container_name: celery-worker
     restart: always
     env_file: .env
     command: celery -A backend worker --loglevel=info
@@ -59,6 +59,20 @@ services:
       - ./logs:/app/logs
     depends_on:
       - redis
+    networks:
+      - internal
+  celery-beat:
+    build:
+      context: ./backend
+    container_name: celery-beat
+    restart: always
+    env_file: .env
+    command: celery -A backend beat --loglevel=info
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+      - celery-worker
     networks:
       - internal
   nginx:
