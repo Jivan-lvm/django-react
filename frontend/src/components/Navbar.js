@@ -22,6 +22,11 @@ const Navbar = ({ logout, isAuthenticated }) => {
     const authLink = () => (
 			<Fragment>
 				<li className='nav-item'>
+					<Link className='nav-link' to='/trade'>
+						Торговля
+					</Link>
+				</li>
+				<li className='nav-item'>
 					<a className='nav-link' href='#!' onClick={logout}>
 						Выход
 					</a>

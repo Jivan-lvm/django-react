@@ -6,6 +6,7 @@ import Signup from './containers/Signup'
 import Activate from './containers/Activate'
 import ResetPassword from './containers/ResetPassword'
 import ResetPasswordConfirm from './containers/ResetPasswordConfirm'
+import Trade from './containers/Trade'
 import Layout from './hocs/Layout'
 import { Provider } from 'react-redux'
 import store from './Store'
@@ -20,6 +21,7 @@ const App = () => (
           <Route exact path='/signup' element={<Signup />} />
           <Route exact path='/activate/:token' element={<Activate />} />
           <Route exact path='/reset_password' element={<ResetPassword />} />
+          <Route exact path='/trade' element={<Trade />} />
           <Route
             exact
             path='password/reset/confirm/:uid/:token'
