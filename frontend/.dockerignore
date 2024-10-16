@@ -1,0 +1,30 @@
+node_modules
+npm-debug.log
+yarn-error.log
+.pnp
+.pnp.js
+
+# Локальные файлы среды
+.env
+*.env
+*.local
+
+# Логи и кэш
+logs
+*.log
+*.cache
+
+# Исключаем временные и кэш файлы
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# Исключаем исходники контроля версий
+.git
+.gitignore
+
+# Исключаем выходные директории сборки
+build/
+dist/
