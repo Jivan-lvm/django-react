@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { checkAuthenticated } from '../actions/auth'
 
-const SellCryptoComponent = () => {
+const SellCryptoComponent = ({ onTransactionComplete }) => {
 	const [crypto, setCrypto] = useState('')
 	const [message, setMessage] = useState('')
 	const [authenticated, setAuthenticated] = useState(false)
@@ -40,6 +40,10 @@ const SellCryptoComponent = () => {
 			)
 
 			setMessage(response.data.success || response.data.error)
+
+			if (response.data.success) {
+				onTransactionComplete()
+			}
 		} catch (error) {
 			console.error('Ошибка при продаже:', error)
 			setMessage(error.response?.data?.error || 'Ошибка при продаже')
