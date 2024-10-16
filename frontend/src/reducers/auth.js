@@ -11,7 +11,8 @@ import {
 	PASSWORD_RESET_FAIL,
 	PASSWORD_RESET_CONFIRM_SUCCESS,
 	SIGNUP_FAIL,
-	SIGNUP_SUCCESS
+	SIGNUP_SUCCESS,
+	TOKEN_REFRESH_SUCCESS
 } from '../actions/types'
 
 const initialState = {
@@ -32,7 +33,7 @@ export default function(state = initialState, action){
 				}
 			case LOGIN_SUCCESS:
 				localStorage.setItem('access', payload.access)
-                localStorage.setItem('refresh', payload.refresh)
+				localStorage.setItem('refresh', payload.refresh)
 				return {
 					...state,
 					access: payload.access,
@@ -41,7 +42,7 @@ export default function(state = initialState, action){
 				}
 			case SIGNUP_SUCCESS:
 				return {
-                    ...state,
+					...state,
 					isAuthenticated: false,
 				}
 			case LOAD_USER_SUCCESS:
@@ -59,8 +60,14 @@ export default function(state = initialState, action){
 					...state,
 					user: null,
 				}
+			case TOKEN_REFRESH_SUCCESS:
+				localStorage.setItem('access', payload.access)
+				return {
+					...state,
+					access: payload.access,
+				}
 			case LOGIN_FAIL:
-            case LOGOUT:
+			case LOGOUT:
 			case SIGNUP_FAIL:
 				localStorage.removeItem('access')
 				localStorage.removeItem('refresh')
@@ -71,15 +78,15 @@ export default function(state = initialState, action){
 					user: null,
 					isAuthenticated: false,
 				}
-            case PASSWORD_RESET_SUCCESS:
-            case PASSWORD_RESET_FAIL:
-            case PASSWORD_RESET_CONFIRM_SUCCESS:
-            case PASSWORD_RESET_CONFIRM_FAIL:
+			case PASSWORD_RESET_SUCCESS:
+			case PASSWORD_RESET_FAIL:
+			case PASSWORD_RESET_CONFIRM_SUCCESS:
+			case PASSWORD_RESET_CONFIRM_FAIL:
 			case SIGNUP_FAIL:
 			case SIGNUP_SUCCESS:
-                return {
-                    ...state
-                }
+				return {
+					...state,
+				}
 			default:
 				return state
 		}

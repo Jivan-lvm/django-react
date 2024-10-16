@@ -12,46 +12,58 @@ import {
 	PASSWORD_RESET_FAIL,
 	PASSWORD_RESET_CONFIRM_SUCCESS,
 	SIGNUP_FAIL,
-	SIGNUP_SUCCESS
+	SIGNUP_SUCCESS,
+	TOKEN_REFRESH_SUCCESS
 } from './types'
 
+export const handleRefreshToken = async dispatch => {
+	const refresh = localStorage.getItem('refresh')
+	if (!refresh) {
+		dispatch({ type: AUTHENTICATED_FAIL })
+		return false
+	}
+
+	try {
+		const res = await axios.post(`${process.env.REACT_APP_API_REFRESH_URL}`, {
+			refresh,
+		})
+		if (res.status === 200) {
+			localStorage.setItem('access', res.data.access)
+			dispatch({ type: TOKEN_REFRESH_SUCCESS, payload: res.data })
+			dispatch({ type: AUTHENTICATED_SUCCESS })
+			return true
+		} else {
+			dispatch({ type: AUTHENTICATED_FAIL })
+			return false
+		}
+	} catch (err) {
+		console.error('Ошибка при обновлении токена:', err.response?.data)
+		dispatch({ type: AUTHENTICATED_FAIL })
+		return false
+	}
+}
+
 export const checkAuthenticated = () => async dispatch => {
-	if (localStorage.getItem('access')){
-		const config = {
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-			},
-		}
+	const accessToken = localStorage.getItem('access')
 
-		const body = JSON.stringify({ token: localStorage.getItem('access') })
-
-		try{
-			const res = await axios.post(`${API_URL}/users/auth/token/verify/`, body, config)
-
-			if (res.data.code !== 'token_not_valid'){
-				dispatch({
-                    type: AUTHENTICATED_SUCCESS,
-                })
-			} else{
-				localStorage.removeItem('access')
-				localStorage.removeItem('refresh')
-				dispatch({
-                    type: AUTHENTICATED_FAIL,
-                })
+	if (accessToken) {
+		try {
+			const res = await axios.post(`${process.env.REACT_APP_API_VERIFY_URL}`, {
+				token: accessToken,
+			})
+			if (res.status === 200) {
+				dispatch({ type: AUTHENTICATED_SUCCESS })
+				return true
+			} else {
+				return await handleRefreshToken(dispatch)
 			}
-		} catch(err){
-			localStorage.removeItem('access')
-			localStorage.removeItem('refresh')
-			dispatch({
-                type: AUTHENTICATED_FAIL,
-            })
+		} catch (err) {
+			console.error('Ошибка проверки токена:', err.response?.data)
+			return await handleRefreshToken(dispatch)
 		}
-
-	} else{
-		dispatch({
-            type: AUTHENTICATED_FAIL,
-        })
+	} else {
+		dispatch({ type: AUTHENTICATED_FAIL })
+		return false
 	}
 }
 

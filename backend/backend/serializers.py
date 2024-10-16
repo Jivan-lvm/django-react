@@ -1,9 +1,16 @@
 from rest_framework import serializers
+from backend.models import Currency
 
 
 class BuyCryptoSerializer(serializers.Serializer):
-    usdt = serializers.DecimalField(max_digits=10, decimal_places=2)
+    usdt = serializers.IntegerField()
 
 
 class SellCryptoSerializer(serializers.Serializer):
-    jivan = serializers.DecimalField(max_digits=10, decimal_places=2)
+    jivan = serializers.IntegerField()
+    
+    
+class CurrencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Currency
+        fields = ['timestamp', 'price_usdt']

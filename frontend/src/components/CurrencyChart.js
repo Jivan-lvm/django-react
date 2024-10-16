@@ -12,15 +12,21 @@ import {
 import axios from 'axios'
 
 const CurrencyChart = () => {
-	const [data, setData] = useState([])
+	const [data, setCurrencyData] = useState([])
 
 	useEffect(() => {
-		axios
-			.get('/api/currency-history')
-			.then(response => {
-				setData(response.data)
-			})
-			.catch(error => console.error(error))
+		const fetchCurrencyHistory = async () => {
+			try {
+				const response = await axios.get('/api/currency-history')
+				const currencyData = response.data.results
+				console.log('Currency History:', currencyData)
+				setCurrencyData(currencyData)
+			} catch (error) {
+				console.error('Ошибка загрузки данных:', error)
+			}
+		}
+
+		fetchCurrencyHistory()
 	}, [])
 
 	return (
@@ -28,7 +34,7 @@ const CurrencyChart = () => {
 			<LineChart data={data}>
 				<CartesianGrid strokeDasharray='3 3' />
 				<XAxis dataKey='timestamp' />
-				<YAxis />
+				<YAxis domain={[0, 10]} />
 				<Tooltip />
 				<Legend />
 				<Line

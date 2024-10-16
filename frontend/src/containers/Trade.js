@@ -1,8 +1,8 @@
 import React from 'react'
-import BuyCryptoComponent from '../components/Buy'
-import SellCryptoComponent from '../components/Sell'
-import BalanceComponent from '../components/Balance'
-import CurrencyChart from '../components/Graph'
+import BuyCryptoComponent from '../components/BuyCryptoComponent'
+import SellCryptoComponent from '../components/SellCryptoComponent'
+import BalanceComponent from '../components/BalanceComponent'
+import CurrencyChart from '../components/CurrencyChart'
 
 const TradePage = () => {
 	return (
