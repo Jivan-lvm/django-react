@@ -2,25 +2,36 @@
 
 Инструкция по запуску:
 
-открыть командную строку и скопировать git clone https://github.com/Jivan-lvm/django-react.git
+открыть командную строку и скопировать: git clone https://github.com/Jivan-lvm/django-react.git
 
-перейти в директорию frontend cd django-react/frontend
+перейти в директорию django-react: cd django-react
 
-активировать виртуальное окружение venv\Scipts\activate
+активировать виртуальное окружение: venv\Scipts\activate
 
-установить yarn npm install yarn
+перейти в директорию frontend: cd frontend
 
-выполнить команду yarn install
+установить yarn: npm install yarn
+
+выполнить команду: yarn install
 
 в файле package_json.txt указано что скопировать в scripts для запуска
 
-выполнить команды yarn build и yarn start для запуска фронтенда
+выполнить команды: yarn build и yarn start для запуска фронтенда
 
-открыть второй терминал и перейти в директорию backend cd django-react/backend
+открыть второй терминал и перейти в директорию django-react: cd django-react
 
-активировать виртуальное окружение venv\Scipts\activate
+активировать виртуальное окружение: venv\Scipts\activate
 
-установить зависимости pip install requirements.txt
+перейти в директорию backend: cd backend
 
-скопироать команду python manage.py runserver для запуска бэкенда
+установить зависимости: pip install requirements.txt
 
+скопироать команду: python manage.py runserver для запуска бэкенда
+
+для запуска через docker
+
+перейти в директорию django-react: cd django-react
+
+активировать виртуальное окружение: venv\Scipts\activate
+
+скопироать команду docker compose up --build
