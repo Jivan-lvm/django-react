@@ -48,9 +48,12 @@ export const checkAuthenticated = () => async dispatch => {
 
 	if (accessToken) {
 		try {
-			const res = await axios.post(`${process.env.REACT_APP_API_VERIFY_URL}`, {
-				token: accessToken,
-			})
+			const res = await axios.post(
+				'http://127.0.0.1:8000/api/v1/auth/jwt/verify/',
+				{
+					token: accessToken,
+				}
+			)
 			if (res.status === 200) {
 				dispatch({ type: AUTHENTICATED_SUCCESS })
 				return true
@@ -68,7 +71,7 @@ export const checkAuthenticated = () => async dispatch => {
 }
 
 const API_URL =
-	process.env.REACT_APP_API_URL
+	'http://127.0.0.1:8000/api/v1/auth'
 
 console.log('API URL is:', API_URL)
 

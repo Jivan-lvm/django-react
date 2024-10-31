@@ -34,7 +34,7 @@ const BuyCryptoComponent = ({ onTransactionComplete }) => {
 			}
 
 			const response = await axios.post(
-				`${process.env.REACT_APP_API_BUY_URL}`,
+				'http://127.0.0.1:8000/api/buy',
 				{ usdt: usdt },
 				config
 			)
@@ -50,13 +50,20 @@ const BuyCryptoComponent = ({ onTransactionComplete }) => {
 		}
 	}
 
+	const handleInputChange = e => {
+		const value = e.target.value
+		if (value === '' || (/^\d+$/.test(value) && Number(value) > 0)) {
+			setUsdt(value)
+		}
+	}
+
 	return (
 		<div>
 			<h2>Покупка криптовалюты</h2>
 			<input
 				type='number'
 				value={usdt}
-				onChange={e => setUsdt(e.target.value)}
+				onChange={handleInputChange}
 				placeholder='Введите сумму USDT'
 			/>
 			<button onClick={handleBuy}>Купить</button>

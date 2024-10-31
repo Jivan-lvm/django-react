@@ -34,7 +34,7 @@ const SellCryptoComponent = ({ onTransactionComplete }) => {
 			}
 
 			const response = await axios.post(
-				`${process.env.REACT_APP_API_SELL_URL}`,
+				'http://127.0.0.1:8000/api/sell',
 				{ jivan: crypto },
 				config
 			)
@@ -50,13 +50,20 @@ const SellCryptoComponent = ({ onTransactionComplete }) => {
 		}
 	}
 
+	const handleInputChange = e => {
+		const value = e.target.value
+		if (value === '' || (/^\d+$/.test(value) && Number(value) > 0)) {
+			setCrypto(value)
+		}
+	}
+
 	return (
 		<div>
 			<h2>Продажа криптовалюты</h2>
 			<input
 				type='number'
 				value={crypto}
-				onChange={e => setCrypto(e.target.value)}
+				onChange={handleInputChange}
 				placeholder='Введите количество криптовалюты'
 			/>
 			<button onClick={handleSell}>Продать</button>

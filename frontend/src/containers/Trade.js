@@ -13,7 +13,7 @@ const TradePage = () => {
 		try {
 			const token = localStorage.getItem('access')
 			const response = await axios.get(
-				`${process.env.REACT_APP_API_BALANCE_URL}`,
+				'http://127.0.0.1:8000/api/user-balance',
 				{
 					headers: { Authorization: `Bearer ${token}` },
 				}
