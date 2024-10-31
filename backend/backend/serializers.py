@@ -10,7 +10,11 @@ class SellCryptoSerializer(serializers.Serializer):
     jivan = serializers.IntegerField()
     
     
-class CurrencySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Currency
-        fields = ['timestamp', 'price_usdt']
+class CurrencySerializer(serializers.Serializer):
+    price_usdt = serializers.IntegerField()
+    timestamp = serializers.DateTimeField()
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['timestamp'] = instance.timestamp.strftime("%d.%m.%Y")
+        return representation
