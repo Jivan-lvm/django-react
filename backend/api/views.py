@@ -23,6 +23,9 @@ class BuyCryptoView(GenericAPIView):
         except Currency.DoesNotExist:
             return Response({'error': 'Цена валюты не найдена'}, status=status.HTTP_404_NOT_FOUND)
         
+        if amount_usdt % current_price != 0:
+            return Response({'error': 'Сумма должна быть кратна текущей цене валюты'}, status=status.HTTP_400_BAD_REQUEST)
+        
         amount_crypto = amount_usdt / current_price
         if user.balance_usdt >= amount_usdt:
             user.balance_usdt -= amount_usdt
