@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 import os
 from datetime import timedelta
 from django.utils.deprecation import MiddlewareMixin
-from django.middleware.csrf import CsrfViewMiddleware
 
 
 load_dotenv()
@@ -45,8 +44,6 @@ INSTALLED_APPS += [
 ]
 
 AUTH_USER_MODEL = 'users.User'
-
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:3000']
 
 class DisableCSRFMiddleware(MiddlewareMixin):
     def process_request(self, request):
@@ -168,20 +165,14 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000", 'http://127.0.0.1:3000']
 
 REACT_APP_DIR = os.path.join(BASE_DIR, '../frontend')
 
@@ -255,6 +246,17 @@ CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', False) == 'True'
+
+CORS_ORIGIN_WHITELIST = os.getenv(
+    'CORS_ORIGIN_WHITELIST',
+    default='http://127.0.0.1,http://localhost,http://0.0.0.0'
+).split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    'CSRF_TRUSTED_ORIGINS',
+    default='http://127.0.0.1,http://localhost,http://0.0.0.0'
+).split(',')
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 

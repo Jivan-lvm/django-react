@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 COPY . .
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "backend.wsgi:application"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:8000 --workers ${GUNICORN_WORKERS} --threads 2 --timeout ${GUNICORN_TIMEOUT} backend.wsgi"]

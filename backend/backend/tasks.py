@@ -9,8 +9,11 @@ logger = logging.getLogger(__name__)
 def generate_random_price():
     try:
         price = random.randint(5, 10)
-        currency = Currency(name='JIVAN', price_usdt=price)
-        currency.save()
-        logger.info(f"Сгенерирована новая цена для JIVAN: {price}")
+        currency, created = Currency.objects.update_or_create(
+            name='JIVAN',
+            defaults={'price_usdt': price}
+        )
+        action = "создана" if created else "обновлена"
+        logger.info(f"{action.capitalize()} цена для JIVAN: {price}")
     except Exception as e:
         logger.error(f"Ошибка при генерации цены: {e}")
