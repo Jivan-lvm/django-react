@@ -17,9 +17,10 @@ const CurrencyChart = () => {
 	useEffect(() => {
 		const fetchCurrencyHistory = async () => {
 			try {
-				const response = await axios.get('/api/currency-history')
+				const response = await axios.get(
+					'http://127.0.0.1:8000/api/currency-history'
+				)
 				const currencyData = response.data.results
-				console.log('Currency History:', currencyData)
 				setCurrencyData(currencyData)
 			} catch (error) {
 				console.error('Ошибка загрузки данных:', error)
@@ -27,6 +28,9 @@ const CurrencyChart = () => {
 		}
 
 		fetchCurrencyHistory()
+		const interval = setInterval(fetchCurrencyHistory, 1000)
+
+		return () => clearInterval(interval)
 	}, [])
 
 	return (

@@ -72,6 +72,8 @@ class UserBalanceView(APIView):
         })
         
         
-class CurrencyHistoryView(ListAPIView):
-    queryset = Currency.objects.all().order_by('timestamp')
-    serializer_class = CurrencySerializer
+class CurrencyHistoryView(APIView):
+    def get(self, request, *args, **kwargs):
+        currencies = Currency.objects.values('name').distinct()
+        serializer = CurrencySerializer(currencies, many=True)
+        return Response(serializer.data)

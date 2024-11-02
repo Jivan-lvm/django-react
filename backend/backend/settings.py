@@ -246,6 +246,7 @@ CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_ALWAYS_EAGER = False
 
 CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', False) == 'True'
 
@@ -264,6 +265,6 @@ if DEBUG:
     CELERY_BEAT_SCHEDULE = {
         'generate_random_price': {
             'task': 'backend.tasks.generate_random_price',
-            'schedule': timedelta(seconds=90),
+            'schedule': timedelta(seconds=60),
         },
     }

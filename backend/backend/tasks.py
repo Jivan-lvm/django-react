@@ -2,6 +2,7 @@ from celery import shared_task
 import random
 from backend.models import Currency
 import logging
+from django.utils import timezone
 
 logger = logging.getLogger(__name__)
 
@@ -9,11 +10,12 @@ logger = logging.getLogger(__name__)
 def generate_random_price():
     try:
         price = random.randint(5, 10)
-        currency, created = Currency.objects.update_or_create(
+        timestamp = timezone.now()
+        currency = Currency.objects.create(
             name='JIVAN',
-            defaults={'price_usdt': price}
+            price_usdt=price,
+            timestamp=timestamp
         )
-        action = "создана" if created else "обновлена"
-        logger.info(f"{action.capitalize()} цена для JIVAN: {price}")
+        logger.info(f"Создана новая цена для JIVAN: {price}, ID записи: {currency.id}")
     except Exception as e:
-        logger.error(f"Ошибка при генерации цены: {e}")
+        logger.error(f"Ошибка при генерации цены в Celery: {e}")

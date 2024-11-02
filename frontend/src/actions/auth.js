@@ -73,8 +73,6 @@ export const checkAuthenticated = () => async dispatch => {
 const API_URL =
 	'http://127.0.0.1:8000/api/v1/auth'
 
-console.log('API URL is:', API_URL)
-
 export const load_user = () => async dispatch => {
 	const token = localStorage.getItem('access')
 

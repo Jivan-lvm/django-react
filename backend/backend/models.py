@@ -6,5 +6,5 @@ class Currency(models.Model):
     price_usdt = models.PositiveIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ('name', 'timestamp')
+    def __str__(self):
+        return f"{self.name}: {self.price_usdt} USD at {self.timestamp}"
