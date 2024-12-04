@@ -6,6 +6,8 @@
 
 перейти в директорию django-react: cd django-react
 
+ввести команду python -m venv venv
+
 активировать виртуальное окружение: venv\Scipts\activate
 
 перейти в директорию frontend: cd frontend
@@ -24,7 +26,7 @@
 
 перейти в директорию backend: cd backend
 
-установить зависимости: pip install requirements.txt
+установить зависимости: pip install -r requirements.txt
 
 скопироать команду: python manage.py runserver для запуска бэкенда
 
